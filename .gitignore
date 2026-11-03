@@ -1,0 +1,13 @@
+#eseguibili
+*.o
+*.out
+*.exe
+tris
+
+#directory temporanee
+obj/
+
+#swap o backup
+*.swp
+*.swo
+*.~
