@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #define X 3
 #define Y 3
@@ -47,10 +48,14 @@ int main() {
 		if(win == true) {
 			if( k == 1) {
 				printf("player 1 has won!!\n");
+				print(grid);
+				printf("\n");
 				return 0;
 			}
 			else if(k == 0) {
 				printf("player 2 ha won!!\n");
+				print(grid);
+				printf("\n");
 				return 0;
 			}
 		}
@@ -77,33 +82,47 @@ void print(char grid[X][Y]) {
 		}
 	}
 }
-
 bool input(char *pcell, char plr) {
 	int i = 0;
 	int j = 0;
+	char mem[100];
+	char *endptr;
+	char *check;
 	printf ("\ninsert coords: ");
-	scanf("%d %d", &i, &j);
-	if (i <= 2 && i >= 0) {
-		if (j <= 2 && j >= 0) {
-			pcell = (pcell + (i * Y +j));
-			if (*pcell != ' ') {
-				printf("Error: cell already occupied\n");
-				return false;
-			}
-			else {
-				*pcell = plr;
-				return true;
-			}
-
+//	scanf("%d %d", &i, &j);
+	while(true){
+		if (fgets(mem, sizeof(mem), stdin) == NULL) {
+    			return false;
 		}
-	else {
+		long coor1 = strtol(mem, &endptr, 10);
+		check = endptr;
+		long coor2 = strtol(endptr, &endptr, 10);
+		if(endptr == mem || check == endptr) {
+			printf("Error: coordinate non valide\ninsert coords:");
+			continue;
+		}
+		if (!(coor1 <= 2 && coor1 >= 0 && coor2 <= 2 && coor2 >= 0)) {
+		printf("\nError: coordinate non valide\n");
+		continue;
+		}
+		i = (int)coor1;
+		j = (int)coor2;
+		break;
+	}
+/*	
+ 		if (!(i <= 2 && i >= 0 && j <= 2 && j >= 0)) {
 		printf("\nError: coordinate non valide\n");
 		return false;
 	}
+*/
+	pcell = (pcell + (i * Y +j));
+	if (*pcell != ' ') {
+		printf("Error: cell already occupied\n");
+		return false;
 	}
 	else {
-		printf("\nError: coordinate non valide\n");
-		return false;
+		*pcell = plr;
+		return true;
 	}
 }
 
@@ -137,7 +156,8 @@ bool victory(char grid[X][Y]) {
 
 
 /*TO DO:
- * 	ver: 0,
- * 	- victory condition
+ * 	ver: 1.0
  * 	- organizing if conditions
+ *
+ * DROPPED:
  * 	- add a grid, to make more clear the program*/
