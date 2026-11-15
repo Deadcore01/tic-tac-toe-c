@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#define X 3
-#define Y 3
+
+#include "tris.h"
 
 // prototipazione funzioni
 
@@ -15,12 +15,16 @@ void print(char grid[X][Y]);
 bool input(char *pcell, char plr);
 
 bool victory(char grid[X][Y]);
+
+bool draw(char grid[X][Y]);
 // main, inizializzo le variabili, chiamo le funzioni
 int main() {
 	bool bl = false;
 	bool win = false;
+	bool vdraw = false;
 	char player;
 	int count = 1;
+	int moves = 0;
 	int k;
 	char grid[X][Y] = {
 		{' ', ' ', ' '},
@@ -29,7 +33,7 @@ int main() {
 	};
 
 	
-	for(int i = 1; i <= 9; i++) {
+	while(moves < 9) {
 		k = 0;
 		k = count % 2;
 		if(k == 1) {
@@ -43,6 +47,7 @@ int main() {
 		bl = input(&grid[0][0], player);
 		if(bl == true) {
 			count = counter(count);
+			moves++;
 		}
 		win = victory(grid);
 		if(win == true) {
@@ -54,6 +59,15 @@ int main() {
 			}
 			else if(k == 0) {
 				printf("player 2 ha won!!\n");
+				print(grid);
+				printf("\n");
+				return 0;
+			}
+		}
+		else if(win == false){
+			vdraw = draw(grid);
+			if (vdraw == true) {
+				printf("DRAW!\n");
 				print(grid);
 				printf("\n");
 				return 0;
@@ -149,6 +163,17 @@ bool victory(char grid[X][Y]) {
 	return false;
 }
 
+bool draw(char grid[X][Y]) {
+	int i, j;
+	for(i = 0; i < X; i++) {
+		for(j = 0; j < Y; j++) {
+			if(grid[i][j] == ' ') {
+				return false;
+			}
+		}
+	}
+	return true;
+}
 
 
 
