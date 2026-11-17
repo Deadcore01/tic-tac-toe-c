@@ -88,11 +88,10 @@ void printCount(int c) {
 }
 
 void print(char grid[X][Y]) {
-	int i, j;
-	for (i = 0; i < X; i++) {
-			printf("\n");
-		for (j = 0; j < Y; j++) {
-			printf("%c", grid[i][j]);			
+	for (int i = 0; i < X; i++) {
+		printf(" %c | %c | %c \n", grid[i][0], grid[i][1], grid[i][2]);
+		if(i < 2) {
+			printf("---+---+---\n");
 		}
 	}
 }
@@ -180,9 +179,10 @@ bool draw(char grid[X][Y]) {
 
 
 
-/*TO DO:
- * 	ver: 1.0
- * 	- organizing if conditions
+/* VER: 1.1
+ * TO DO:
+ * add a menu	
+ * add a bot mode	
  *
  * DROPPED:
- * 	- add a grid, to make more clear the program*/
+ */ 	
